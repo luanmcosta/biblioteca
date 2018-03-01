@@ -7,18 +7,12 @@ package biblioteca.models;
 
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 
 /**
  *
  * @author luanm
  */
-@Entity
-@Table(name="emprestimos")
 public class Emprestimo {
     
     private int id;
@@ -40,8 +34,6 @@ public class Emprestimo {
         this.dataDevolucao = dataDevolucao;
     }
     
-    @Id
-    @GeneratedValue
     public int getId() {
         return id;
     }

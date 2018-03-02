@@ -1,7 +1,10 @@
 package biblioteca;
 
 import biblioteca.models.db.Conexao;
+import com.mysql.jdbc.Statement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +21,11 @@ public class Biblioteca extends Application {
     public void start(Stage primaryStage) {
         try {
             Connection con = Conexao.getConexao();
-            System.out.println(con.isClosed());
+            PreparedStatement pre = con.prepareStatement("insert into teste (nome) values ('Dois')", Statement.RETURN_GENERATED_KEYS);
+            pre.executeUpdate();
+            ResultSet res = pre.getGeneratedKeys();
+            res.next();
+            System.out.println(res.getInt(1));
         } catch (SQLException ex) {
             Logger.getLogger(Biblioteca.class.getName()).log(Level.SEVERE, null, ex);
         }

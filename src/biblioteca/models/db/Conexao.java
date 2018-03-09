@@ -8,26 +8,45 @@ package biblioteca.models.db;
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author luanm
  */
 public class Conexao {
-    private static final String db_ip = "localhost";
-    private static final String db_banco = "biblioteca";
-    private static final String db_usuario = "root";
-    private static final String db_senha = "123";
-    
-    public static Connection conexao;
 
-    public Conexao() {
-    }
-    
-    public static Connection getConexao() throws SQLException{
-        if(conexao == null)
-            conexao = (Connection) DriverManager.getConnection( "jdbc:mysql://" + db_ip + "/" + db_banco, db_usuario, db_senha);
-        return conexao;
-    }
-    
+	private static final String DB_IP = "localhost";
+	private static final String DB_BANCO = "biblioteca";
+	private static final String DB_USUARIO = "root";
+	private static final String DB_SENHA = "123";
+
+	public static Connection conexao;
+
+	// Construtor
+	public Conexao() {
+	}
+
+	// Métodos
+	public static Connection getConnection() {
+		if (conexao == null) {
+			try {
+				conexao = (Connection) DriverManager.getConnection("jdbc:mysql://" + DB_IP + "/" + DB_BANCO, DB_USUARIO, DB_SENHA);
+			} catch (SQLException ex) {
+				System.out.println("Não foi possivel conectar ao banco de dados:\n Erro: " + ex.getErrorCode());
+			}
+		}
+		return conexao;
+	}
+
+	public static void closeConnection() {
+		if (conexao != null) {
+			try {
+				conexao.close();
+			} catch (SQLException ex) {
+				System.out.println("Não foi possível fechar a conexão:\n Erro: " + ex.getErrorCode());
+			}
+		}
+	}
 }

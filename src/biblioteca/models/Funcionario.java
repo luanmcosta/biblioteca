@@ -9,35 +9,34 @@ package biblioteca.models;
  *
  * @author luanm
  */
-public class Funcionario extends Pessoa{
-    
-    private String usuario;
-    private String senha;
+public class Funcionario extends Pessoa {
 
-    public Funcionario(int id, int cpf, String nome, String email, String telefone, String rua, String bairro, String usuario, String senha) {
-        super(id, cpf, nome, email, telefone, rua, bairro);
-        this.usuario = usuario;
-        this.senha = senha;
-    }
-    
-    public String getUsuario() {
-        return usuario;
-    }
+	private String usuario;
+	private String senha;
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
+	public Funcionario() {
+	}
 
-    public String getSenha() {
-        return senha;
-    }
+	public Funcionario(int id, String cpf, String nome, String email, String telefone, String rua, String bairro, String usuario, String senha) {
+		super(id, cpf, nome, email, telefone, rua, bairro);
+		this.usuario = usuario;
+		this.senha = senha;
+	}
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+	public String getUsuario() {
+		return usuario;
+	}
 
-    
-    
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 }
-
-

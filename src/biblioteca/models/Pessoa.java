@@ -10,86 +10,82 @@ package biblioteca.models;
  * @author luanm
  */
 public abstract class Pessoa {
-    private int id;
-    private int cpf;
-    private String nome;
-    private String email;
-    private String telefone;
-    private String rua;
-    private String bairro;
 
-    public Pessoa(int id, int cpf, String nome, String email, String telefone, String rua, String bairro) {
-        this.id = id;
-        this.cpf = cpf;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.rua = rua;
-        this.bairro = bairro;
-    }
-    
-    
+	private int id;
+	private String cpf;
+	private String nome;
+	private String email;
+	private String telefone;
+	private String rua;
+	private String bairro;
 
-    public int getId() {
-        return id;
-    }
+	public Pessoa() {
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public Pessoa(int id, String cpf, String nome, String email, String telefone, String rua, String bairro) {
+		this.id = id;
+		this.cpf = cpf;
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
+		this.rua = rua;
+		this.bairro = bairro;
+	}
 
-    public int getCpf() {
-        return cpf;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setCpf(int cpf) {
-        this.cpf = cpf;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getRua() {
-        return rua;
-    }
+	public String getTelefone() {
+		return telefone;
+	}
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    public String getBairro() {
-        return bairro;
-    }
+	public String getRua() {
+		return rua;
+	}
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-    
-    
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 
 }
-
-
-
-

@@ -11,33 +11,33 @@
 CREATE DATABASE IF NOT EXISTS biblioteca;
 USE biblioteca;
 
-CREATE TABLE IF NOT EXISTS pessoa(
+CREATE TABLE IF NOT EXISTS pessoas(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(128),
-    cpf INT,
+    cpf VARCHAR(12),
     rua VARCHAR(128),
     bairro VARCHAR(64),
     email VARCHAR(64),
-    telefone INT,
+    telefone VARCHAR(12),
     id_funcionario INT NULL,
     id_leitor INT NULL
 );
 
-CREATE TABLE IF NOT EXISTS leitor(
+CREATE TABLE IF NOT EXISTS leitores(
     id INT PRIMARY KEY AUTO_INCREMENT,
     quantidade_livros INT NULL DEFAULT 0,
     bloqueio BOOLEAN NULL DEFAULT FALSE,
     id_pessoa INT NULL
 );
 
-CREATE TABLE IF NOT EXISTS funcionario(
+CREATE TABLE IF NOT EXISTS funcionarios(
     id INT PRIMARY KEY AUTO_INCREMENT,
     usuario VARCHAR(32) NOT NULL,
     senha VARCHAR(32) NOT NULL,
     id_pessoa INT NULL
 );
 
-CREATE TABLE IF NOT EXISTS livro(
+CREATE TABLE IF NOT EXISTS livros(
     id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(128),
     autor VARCHAR(64),
@@ -46,11 +46,10 @@ CREATE TABLE IF NOT EXISTS livro(
     ano INT,
     isbn INT,
     edicao INT,
-    id_emprestimo INT NULL,
-    id_reserva INT NULL
+    id_emprestimo INT NULL
 );
 
-CREATE TABLE IF NOT EXISTS emprestimo(
+CREATE TABLE IF NOT EXISTS emprestimos(
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_funcionario INT NULL,
     id_leitor INT NULL,
@@ -58,43 +57,63 @@ CREATE TABLE IF NOT EXISTS emprestimo(
     data_devolucao DATE
 );
 
-CREATE TABLE IF NOT EXISTS reserva(
+CREATE TABLE IF NOT EXISTS reservas(
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_funcionario INT NULL,
     id_leitor INT NULL,
+    id_livro INT NULL,
     data_reserva DATE
+);
+
+CREATE TABLE IF NOT EXISTS livrosreservados(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_livro INT NULL,
+    id_reserva INT NULL
 );
 
 -- Atribuindo relacionamento (Chaves estrangeiras) 
 
-ALTER TABLE pessoa 
+ALTER TABLE pessoas
     ADD CONSTRAINT fk_pessoa_funcionario
-        FOREIGN KEY(id_funcionario) REFERENCES funcionario(id),
+        FOREIGN KEY(id_funcionario) REFERENCES funcionarios(id) ON DELETE CASCADE,
     ADD CONSTRAINT fk_pessoa_leitor
-        FOREIGN KEY(id_leitor) REFERENCES leitor(id);
+        FOREIGN KEY(id_leitor) REFERENCES leitores(id) ON DELETE CASCADE;
 
 
-ALTER TABLE funcionario ADD CONSTRAINT fk_funcionario_pessoa
-    FOREIGN KEY(id_pessoa) REFERENCES pessoa(id);
+ALTER TABLE funcionarios ADD CONSTRAINT fk_funcionario_pessoa
+    FOREIGN KEY(id_pessoa) REFERENCES pessoas(id) ON DELETE CASCADE;
 
-ALTER TABLE leitor ADD CONSTRAINT fk_leitor_pessoa
-    FOREIGN KEY(id_pessoa) REFERENCES pessoa(id);
+ALTER TABLE leitores ADD CONSTRAINT fk_leitor_pessoa
+    FOREIGN KEY(id_pessoa) REFERENCES pessoas(id) ON DELETE CASCADE;
 
 
-ALTER TABLE livro 
+ALTER TABLE livros
     ADD CONSTRAINT fk_livro_emprestimo
-        FOREIGN KEY(id_emprestimo) REFERENCES emprestimo(id),
-    ADD CONSTRAINT fk_livro_reserva
-        FOREIGN KEY(id_reserva) REFERENCES reserva(id);
+        FOREIGN KEY(id_emprestimo) REFERENCES emprestimos(id) ON DELETE CASCADE;
 
-ALTER TABLE emprestimo 
+ALTER TABLE emprestimos
     ADD CONSTRAINT fk_emprestimo_funcionario
-        FOREIGN KEY(id_funcionario) REFERENCES funcionario(id),
+        FOREIGN KEY(id_funcionario) REFERENCES pessoas(id) ON DELETE CASCADE,
     ADD CONSTRAINT fk_emprestimo_leitor
-        FOREIGN KEY(id_leitor) REFERENCES leitor(id);
+        FOREIGN KEY(id_leitor) REFERENCES pessoas(id) ON DELETE CASCADE;
 
-ALTER TABLE reserva
+ALTER TABLE reservas
     ADD CONSTRAINT fk_reserva_funcionario
-        FOREIGN KEY(id_funcionario) REFERENCES funcionario(id),
+        FOREIGN KEY(id_funcionario) REFERENCES pessoas(id) ON DELETE CASCADE,
     ADD CONSTRAINT fk_reserva_leitor
-        FOREIGN KEY(id_leitor) REFERENCES leitor(id);
+        FOREIGN KEY(id_leitor) REFERENCES pessoas(id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_reserva_livro
+        FOREIGN  KEY(id_livro) REFERENCES livros(id) ON DELETE CASCADE;
+
+
+INSERT INTO pessoas (nome, cpf, rua, bairro, email, telefone) VALUES
+    ("Pessoa1", "1234", "rua 1", "bairro 1", "pessoa@gmail.com", "999999");
+INSERT INTO leitores (quantidade_livros, bloqueio, id_pessoa) VALUES
+    (0, false, 1);
+UPDATE pessoas SET id_leitor = 1 WHERE id = 1;
+
+INSERT INTO pessoas (nome, cpf, rua, bairro, email, telefone) VALUES
+    ("funcionario", "555", "Alfeneiiros 1", "centro", "caraca@gmail.com", "2222");
+INSERT INTO funcionarios (usuario, senha, id_pessoa) VALUES
+    ("loginbr123", "123456", 2);
+UPDATE pessoas SET id_funcionario = 1 WHERE id = 2;

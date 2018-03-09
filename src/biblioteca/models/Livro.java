@@ -10,90 +10,131 @@ package biblioteca.models;
  * @author luanm
  */
 public class Livro {
-    
-    private int id;
-    private String titulo;
-    private String autor;
-    private String categoria;
-    private int ano;
-    private int isbn;
-    private String status;
 
-    public Livro(int id, String titulo, String autor, String categoria, int ano, int isbn, String status) {
-        this.id = id;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.categoria = categoria;
-        this.ano = ano;
-        this.isbn = isbn;
-        this.status = status;
-    }
-    
-    public int getId() {
-        return id;
-    }
+	private int id;
+	private String titulo;
+	private String autor;
+	private String categoria;
+	private String status;
+	private int ano;
+	private int isbn;
+	private int edicao;
+	private int reservas[];
+	private int emprestimo;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public Livro() {
+	}
 
-    public String getTitulo() {
-        return titulo;
-    }
+	public Livro(int id, String titulo, String autor, String categoria, String status, int ano, int isbn, int edicao) {
+		this.id = id;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.categoria = categoria;
+		this.status = status;
+		this.ano = ano;
+		this.isbn = isbn;
+		this.edicao = edicao;
+	}
+	
+	
+	
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
+	public Livro(int id, String titulo, String autor, String categoria, String status, int ano, int isbn, int edicao, int[] reservas, int emprestimo) {
+		this.id = id;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.categoria = categoria;
+		this.status = status;
+		this.ano = ano;
+		this.isbn = isbn;
+		this.edicao = edicao;
+		this.reservas = reservas;
+		this.emprestimo = emprestimo;
+	}
+	
+	public int getId() {
+		return id;
+	}
 
-    public String getAutor() {
-        return autor;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
+	public String getTitulo() {
+		return titulo;
+	}
 
-    public String getCategoria() {
-        return categoria;
-    }
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
+	public String getAutor() {
+		return autor;
+	}
 
-    public int getAno() {
-        return ano;
-    }
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
 
-    public void setAno(int ano) {
-        this.ano = ano;
-    }
+	public String getCategoria() {
+		return categoria;
+	}
 
-    public int getIsbn() {
-        return isbn;
-    }
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 
-    public void setIsbn(int isbn) {
-        this.isbn = isbn;
-    }
+	public int getAno() {
+		return ano;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+	public int getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(int isbn) {
+		this.isbn = isbn;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getEdicao() {
+		return edicao;
+	}
+
+	public void setEdicao(int edicao) {
+		this.edicao = edicao;
+	}
+
+	public int[] getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(int[] reservas) {
+		this.reservas = reservas;
+	}
+
+	public int getEmprestimo() {
+		return emprestimo;
+	}
+
+	public void setEmprestimo(int emprestimo) {
+		this.emprestimo = emprestimo;
+	}
+	
+	public boolean emprestado(){
+		return getEmprestimo() != 0;
+	}
+
+	
 }

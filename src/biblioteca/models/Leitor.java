@@ -9,39 +9,39 @@ package biblioteca.models;
  *
  * @author luanm
  */
-public class Leitor extends Pessoa{
-    
-    private int quantidadeLivros;
-    private boolean bloqueio;
+public class Leitor extends Pessoa {
 
-    public Leitor(int id, int cpf, String nome, String email, String telefone, String rua, String bairro) {
-        super(id, cpf, nome, email, telefone, rua, bairro);
-    }
+	private int quantidadeLivros;
+	private boolean bloqueio;
 
-    public Leitor(int id, int cpf, String nome, String email, String telefone, String rua, String bairro, int quantidadeLivros, boolean bloqueio) {
-        super(id, cpf, nome, email, telefone, rua, bairro);
-        this.quantidadeLivros = quantidadeLivros;
-        this.bloqueio = bloqueio;
-    }
+	public Leitor() {
 
-    
+	}
 
-    public int getQuantidadeLivros() {
-        return quantidadeLivros;
-    }
+	public Leitor(int id, String cpf, String nome, String email, String telefone, String rua, String bairro) {
+		super(id, cpf, nome, email, telefone, rua, bairro);
+	}
 
-    public void setQuantidadeLivros(int quantidadeLivros) {
-        this.quantidadeLivros = quantidadeLivros;
-    }
+	public Leitor(int id, String cpf, String nome, String email, String telefone, String rua, String bairro, int quantidadeLivros, boolean bloqueio) {
+		super(id, cpf, nome, email, telefone, rua, bairro);
+		this.quantidadeLivros = quantidadeLivros;
+		this.bloqueio = bloqueio;
+	}
 
-    public boolean isBloqueio() {
-        return bloqueio;
-    }
+	public int getQuantidadeLivros() {
+		return quantidadeLivros;
+	}
 
-    public void setBloqueio(boolean bloqueio) {
-        this.bloqueio = bloqueio;
-    }
-    
-    
-    
+	public void setQuantidadeLivros(int quantidadeLivros) {
+		this.quantidadeLivros = quantidadeLivros;
+	}
+
+	public boolean isBloqueio() {
+		return bloqueio;
+	}
+
+	public void setBloqueio(boolean bloqueio) {
+		this.bloqueio = bloqueio;
+	}
+
 }

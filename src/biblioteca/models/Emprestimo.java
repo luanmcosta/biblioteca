@@ -1,87 +1,90 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package biblioteca.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 /**
  *
  * @author luanm
  */
 public class Emprestimo {
-    
-    private int id;
-    private List<Livro> livros;
-    private Leitor leitor;
-    private Funcionario funcionario;
-    private Date dataEmprestimo;
-    private Date dataDevolucao;
 
-    public Emprestimo() {
-    }
+	private int id;
+	private List<Livro> livros;
+	private Leitor leitor;
+	private Funcionario funcionario;
+	private Date dataEmprestimo;
+	private Date dataDevolucao;
 
-    public Emprestimo(int id, List<Livro> livros, Leitor leitor, Funcionario funcionario, Date dataEmprestimo, Date dataDevolucao) {
-        this.id = id;
-        this.livros = livros;
-        this.leitor = leitor;
-        this.funcionario = funcionario;
-        this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
-    }
-    
-    public int getId() {
-        return id;
-    }
+	public Emprestimo() {
+		livros = new ArrayList<>();
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public Emprestimo(int id, List<Livro> livros, Leitor leitor, Funcionario funcionario, Date dataEmprestimo, Date dataDevolucao) {
+		this.id = id;
+		this.livros = livros;
+		this.leitor = leitor;
+		this.funcionario = funcionario;
+		this.dataEmprestimo = dataEmprestimo;
+		this.dataDevolucao = dataDevolucao;
+	}
 
-    public List<Livro> getLivros() {
-        return livros;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setLivros(List<Livro> livros) {
-        this.livros = livros;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public Leitor getLeitor() {
-        return leitor;
-    }
+	public List<Livro> getLivros() {
+		return livros;
+	}
 
-    public void setLeitor(Leitor leitor) {
-        this.leitor = leitor;
-    }
+	public void setLivros(List<Livro> livros) {
+		this.livros = livros;
+	}
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
+	public Leitor getLeitor() {
+		return leitor;
+	}
+	
+	public void addLivro(Livro livro){
+		this.livros.add(livro);
+	}
 
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
+	public void setLeitor(Leitor leitor) {
+		this.leitor = leitor;
+	}
 
-    public Date getDataEmprestimo() {
-        return dataEmprestimo;
-    }
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
 
-    public void setDataEmprestimo(Date dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-    }
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 
-    public Date getDataDevolucao() {
-        return dataDevolucao;
-    }
+	public Date getDataEmprestimo() {
+		return dataEmprestimo;
+	}
 
-    public void setDataDevolucao(Date dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
-    }
-    
-    
-    
+	public void setDataEmprestimo(Date dataEmprestimo) {
+		this.dataEmprestimo = dataEmprestimo;
+	}
+
+	public Date getDataDevolucao() {
+		return dataDevolucao;
+	}
+
+	public void setDataDevolucao(Date dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
+	}
+
 }

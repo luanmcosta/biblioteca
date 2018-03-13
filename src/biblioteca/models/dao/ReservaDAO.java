@@ -6,15 +6,14 @@
 package biblioteca.models.dao;
 
 import biblioteca.models.Reserva;
-import biblioteca.models.Livro;
 import biblioteca.models.db.Conexao;
 import com.mysql.jdbc.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -33,7 +32,7 @@ public class ReservaDAO {
 		this.conexao = Conexao.getConnection();
 	}
 
-	public void inserirReserva(Reserva reserva) {
+	public boolean inserirReserva(Reserva reserva) {
 
 		String inserirReserva = "INSERT INTO " + tabelaReservas + " (id_funcionario, id_leitor, id_livro, data_reserva) VALUES (?, ?, ?, ?)";
 	
@@ -49,8 +48,68 @@ public class ReservaDAO {
 
 		} catch (SQLException ex) {
 			System.out.println("Não foi possível inserir o reserva.\nErro: " + ex.getErrorCode());
+			return false;
 		}
+		
+		return true;
 	}
+	
+	public ArrayList<Reserva> consultarReservas(String coluna, String valor) {
+		
+		ArrayList<Reserva> reservas = new ArrayList<>();
+		String query = "SELECT * FROM " + tabelaReservas + " WHERE " + coluna + "='" + valor;
+	
+		try {
+			// Buscar dados de reserva
+			declaracao = conexao.prepareStatement(query);
+			ResultSet res = declaracao.executeQuery(); 
+			
+			while (res.next()) {
+				Reserva reserva = new Reserva();
+				reserva.setId(res.getInt("id"));
+				reserva.setLeitor(new LeitorDAO().consultarLeitor("id", String.valueOf(res.getInt("id_leitor"))));
+				reserva.setFuncionario(new FuncionarioDAO().consultarFuncionario("id", String.valueOf(res.getInt("id_funcionario"))));
+				reserva.setLivro(new LivroDAO().consultarLivro("id", String.valueOf(res.getInt("id_livro"))));
+				reserva.setDataReserva(new Date(res.getDate("data_reserva").getTime()));
+				
+				reservas.add(reserva);
+			} 
+			
+		} catch (SQLException ex) {
+			System.out.println("Erro ao tentar consultar reserva.\nErro: " + ex.getErrorCode());
+			return null;
+		}
+		return reservas;
+	}
+	
+	public ArrayList<Reserva> listarReservas() {
+		
+		ArrayList<Reserva> reservas = new ArrayList<>();
+		String query = "SELECT * FROM " + tabelaReservas;
+	
+		try {
+			// Buscar dados de reserva
+			declaracao = conexao.prepareStatement(query);
+			ResultSet res = declaracao.executeQuery(); 
+			
+			while (res.next()) {
+				Reserva reserva = new Reserva();
+				reserva.setId(res.getInt("id"));
+				reserva.setLeitor(new LeitorDAO().consultarLeitor("id", String.valueOf(res.getInt("id_leitor"))));
+				reserva.setFuncionario(new FuncionarioDAO().consultarFuncionario("id", String.valueOf(res.getInt("id_funcionario"))));
+				reserva.setLivro(new LivroDAO().consultarLivro("id", String.valueOf(res.getInt("id_livro"))));
+				reserva.setDataReserva(new Date(res.getDate("data_reserva").getTime()));
+				
+				reservas.add(reserva);
+			} 
+			
+		} catch (SQLException ex) {
+			System.out.println("Erro ao tentar consultar reserva.\nErro: " + ex.getErrorCode());
+			return null;
+		}
+		return reservas;
+	}
+	
 
 	public Reserva consultarReserva(String coluna, String valor) {
 		
@@ -105,7 +164,7 @@ public class ReservaDAO {
 		return removerReserva(reserva.getId());
 	}
 	
-	private boolean removerReserva(int id) {
+	public boolean removerReserva(int id) {
 		try {
 			String query = "DELETE FROM " + tabelaReservas + " WHERE id = ?";
 			declaracao = conexao.prepareStatement(query);

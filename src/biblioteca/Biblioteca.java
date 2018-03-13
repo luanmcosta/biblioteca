@@ -99,6 +99,7 @@ public class Biblioteca extends Application {
 		res.setLeitor(l);
 		res.setDataReserva(new Date());
 		///resDAO.inserirReserva(res);
+		
 		Emprestimo e1 = empDAO.consultarEmprestimo("id", "1");
 		System.out.println(e1.getLivros().get(0).getTitulo());
 		empDAO.removerEmprestimo(e1);

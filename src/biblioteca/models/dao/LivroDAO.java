@@ -31,7 +31,7 @@ public class LivroDAO {
 		this.conexao = Conexao.getConnection();
 	}
 
-	public void inserirLivro(Livro livro) {
+	public boolean inserirLivro(Livro livro) {
 
 		String inserirLivro = "INSERT INTO " + tabelaLivros + " (titulo, autor, categoria, status, ano, isbn, edicao) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -50,13 +50,43 @@ public class LivroDAO {
 
 		} catch (SQLException ex) {
 			System.out.println("Não foi possível gerar a declaração.\nErro: " + ex.getErrorCode());
+			return false;
 		}
+		
+		return true;
 	}
 	
 	public ArrayList<Livro> consultarLivros(String coluna, String valor) {
 		
 		ArrayList<Livro> livros = new ArrayList<>();
 		String query = "SELECT * FROM " + tabelaLivros + " WHERE " + coluna + "='" + valor + "'";
+		
+		try {
+			declaracao = conexao.prepareStatement(query);
+			ResultSet res = declaracao.executeQuery(); 
+
+			while (res.next()) {
+				Livro livro = new Livro();
+				livro.setId(res.getInt("id"));
+				livro.setTitulo(res.getString("titulo"));
+				livro.setAutor(res.getString("autor"));
+				livro.setCategoria(res.getString("categoria"));
+				livro.setStatus(res.getString("status"));
+				livro.setAno(res.getInt("ano"));
+				livro.setIsbn(res.getInt("isbn"));
+				livro.setEdicao(res.getInt("edicao"));
+				livros.add(livro);
+			} 
+		} catch (SQLException ex) {
+			System.out.println("Erro ao tentar consultar livros.\nErro: " + ex.getErrorCode());
+		}
+		return livros;
+	}
+	
+	public ArrayList<Livro> listarLivros() {
+		
+		ArrayList<Livro> livros = new ArrayList<>();
+		String query = "SELECT * FROM " + tabelaLivros;
 		
 		try {
 			declaracao = conexao.prepareStatement(query);

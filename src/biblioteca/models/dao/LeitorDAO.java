@@ -12,8 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,7 +31,7 @@ public class LeitorDAO {
 		this.conexao = Conexao.getConnection();
 	}
 
-	public void inserirLeitor(Leitor leitor) {
+	public boolean inserirLeitor(Leitor leitor) {
 
 		String inserirPessoa = "INSERT INTO " + tabelaPessoas + " (nome, cpf, rua, bairro, email, telefone) VALUES (?, ?, ?, ?, ?, ?)";
 		String inserirLeitor = "INSERT INTO " + tabelaLeitores + " (quantidade_livros, bloqueio, id_pessoa) VALUES (?, ?, ?)";
@@ -64,7 +63,38 @@ public class LeitorDAO {
 
 		} catch (SQLException ex) {
 			System.out.println("Não foi possível gerar a declaração.\nErro: " + ex.getErrorCode());
+			return false;
 		}
+		
+		return true;
+	}
+	
+	public ArrayList<Leitor> listarLeitores(){
+		ArrayList<Leitor> leitores = new ArrayList<>();
+		String query = "SELECT * FROM " + tabelaLeitores;
+		
+		try {
+			declaracao = conexao.prepareStatement(query);
+			//System.out.println(declaracao.toString());
+			ResultSet res = declaracao.executeQuery(); 
+
+			while (res.next()) {
+				Leitor leitor = new Leitor();
+				leitor.setId(res.getInt("id"));
+				leitor.setNome(res.getString("nome"));
+				leitor.setCpf(res.getString("cpf"));
+				leitor.setRua(res.getString("rua"));
+				leitor.setBairro(res.getString("bairro"));
+				leitor.setEmail(res.getString("email"));
+				leitor.setTelefone(res.getString("telefone"));
+				leitor.setQuantidadeLivros(res.getInt("quantidade_livros"));
+				leitor.setBloqueio(res.getBoolean("bloqueio"));
+				leitores.add(leitor);
+			}
+		} catch (SQLException ex) {
+			System.out.println("Erro ao tentar listar os leitores.\nErro: " + ex.getErrorCode());
+		}
+		return leitores;
 	}
 
 	public Leitor consultarLeitor(String coluna, String valor) {

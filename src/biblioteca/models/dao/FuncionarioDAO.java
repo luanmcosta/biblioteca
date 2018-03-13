@@ -30,7 +30,7 @@ public class FuncionarioDAO {
 		this.conexao = Conexao.getConnection();
 	}
 
-	public void inserirFuncionario(Funcionario funcionario) {
+	public boolean inserirFuncionario(Funcionario funcionario) {
 
 		String inserirPessoa = "INSERT INTO " + tabelaPessoas + " (nome, cpf, rua, bairro, email, telefone) VALUES (?, ?, ?, ?, ?, ?)";
 		String inserirFuncionario = "INSERT INTO " + tabelaFuncionarios + " (usuario, senha, id_pessoa) VALUES (?, ?, ?)";
@@ -62,7 +62,10 @@ public class FuncionarioDAO {
 
 		} catch (SQLException ex) {
 			System.out.println("Não foi possível gerar a declaração.\nErro: " + ex.getErrorCode());
+			return false;
 		}
+		
+		return true;
 	}
 	
 	public Funcionario consultarFuncionario(String coluna, String valor) {

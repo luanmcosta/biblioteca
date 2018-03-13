@@ -33,7 +33,7 @@ public class EmprestimoDAO {
 		this.conexao = Conexao.getConnection();
 	}
 
-	public void inserirEmprestimo(Emprestimo emprestimo) {
+	public boolean inserirEmprestimo(Emprestimo emprestimo) {
 
 		String inserirEmprestimo = "INSERT INTO " + tabelaEmprestimos + " (id_funcionario, id_leitor, data_emprestimo, data_devolucao) VALUES (?, ?, ?, ?)";
 		
@@ -58,7 +58,10 @@ public class EmprestimoDAO {
 
 		} catch (SQLException ex) {
 			System.out.println("Não foi possível inserir o emprestimo.\nErro: " + ex.getErrorCode());
+			return false;
 		}
+		
+		return true;
 	}
 
 	public Emprestimo consultarEmprestimo(String coluna, String valor) {
@@ -132,7 +135,7 @@ public class EmprestimoDAO {
 		return removerEmprestimo(emprestimo.getId());
 	}
 	
-	private boolean removerEmprestimo(int id) {
+	public boolean removerEmprestimo(int id) {
 		try {
 			String query = "DELETE FROM " + tabelaEmprestimos + " WHERE id = ?";
 			declaracao = conexao.prepareStatement(query);
@@ -146,7 +149,39 @@ public class EmprestimoDAO {
 		}
 		return false;
 	}
-
+	
+	public ArrayList<Emprestimo> listarEmprestimos(){
+		
+		ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+		String query = "SELECT * FROM " + tabelaEmprestimos;	
+		
+		try {
+			// Buscar dados de emprestimo
+			declaracao = conexao.prepareStatement(query);
+			ResultSet res = declaracao.executeQuery(); 
+			
+			LivroDAO livroDAO = new LivroDAO();
+			
+			while(res.next()) {
+				Emprestimo emprestimo = new Emprestimo();
+				emprestimo.setId(res.getInt("id"));
+				emprestimo.setLeitor(new LeitorDAO().consultarLeitor("id", String.valueOf(res.getInt("id_leitor"))));
+				emprestimo.setFuncionario(new FuncionarioDAO().consultarFuncionario("id", String.valueOf(res.getInt("id_funcionario"))));
+				emprestimo.setDataEmprestimo(new Date(res.getDate("data_emprestimo").getTime()));
+				emprestimo.setDataDevolucao(new Date(res.getDate("data_devolucao").getTime()));
+				
+				ArrayList<Livro> livros = livroDAO.consultarLivros("id_emprestimo", String.valueOf(emprestimo.getId()));
+				emprestimo.setLivros(livros);
+				
+				emprestimos.add(emprestimo);
+			}
+			
+		} catch (SQLException ex) {
+			System.out.println("Erro ao tentar buscar emprestimos.\nErro: " + ex.getErrorCode());
+			return null;
+		}
+		return emprestimos;
+	}
 	private int inserirRegistro() throws SQLException {
 		declaracao.executeUpdate();
 		ResultSet res = declaracao.getGeneratedKeys();

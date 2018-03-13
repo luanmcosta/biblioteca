@@ -8,6 +8,8 @@
  * Created: 01/03/2018
  */
 
+DROP DATABASE biblioteca;
+
 CREATE DATABASE IF NOT EXISTS biblioteca;
 USE biblioteca;
 
@@ -115,5 +117,5 @@ UPDATE pessoas SET id_leitor = 1 WHERE id = 1;
 INSERT INTO pessoas (nome, cpf, rua, bairro, email, telefone) VALUES
     ("funcionario", "555", "Alfeneiiros 1", "centro", "caraca@gmail.com", "2222");
 INSERT INTO funcionarios (usuario, senha, id_pessoa) VALUES
-    ("loginbr123", "123456", 2);
+    ("func", "123", 2);
 UPDATE pessoas SET id_funcionario = 1 WHERE id = 2;

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.views.TelaPrincipalFXMLController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.controllers.views.TelaPrincipalFXMLController">
    <children>
       <TabPane layoutY="-2.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -16,11 +16,6 @@
                   <Pane prefHeight="371.0" prefWidth="565.0">
                      <children>
                         <TextField layoutX="38.0" layoutY="31.0" prefHeight="25.0" prefWidth="508.0" />
-                        <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="554.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@lupao.png" />
-                           </image>
-                        </ImageView>
                         <Label layoutX="38.0" layoutY="65.0" text="Filtros:">
                            <font>
                               <Font name="System Bold" size="14.0" />
@@ -50,13 +45,152 @@
                               <TableColumn prefWidth="154.0" text="Estado" />
                           </columns>
                         </TableView>
+                        <Button layoutX="552.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="Button" />
                      </children>
                   </Pane>
                </content>
             </Tab>
-          <Tab text="Pesquisa" />
-            <Tab text="Cadastro" />
-            <Tab text="Empréstimo" />
+          <Tab text="Pesquisa">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="tfPesquisaFiltro" layoutX="38.0" layoutY="21.0" onKeyTyped="#pesquisarLivro" prefHeight="25.0" prefWidth="413.0" />
+                        <Label layoutX="38.0" layoutY="67.0" text="Filtros:">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tvPesquisaTabela" layoutX="39.0" layoutY="135.0" prefHeight="215.0" prefWidth="509.0">
+                          <columns>
+                            <TableColumn fx:id="tcPesquisaId" prefWidth="42.0" text="ID" />
+                            <TableColumn fx:id="tcPesquisaTitulo" prefWidth="237.0" text="Titulo" />
+                              <TableColumn fx:id="tcPesquisaAutor" minWidth="0.0" prefWidth="137.0" text="Autor" />
+                              <TableColumn fx:id="tcPesquisaEdicao" prefWidth="49.0" text="Edição" />
+                              <TableColumn fx:id="tcPesquisaEstado" prefWidth="43.0" text="Estado" />
+                          </columns>
+                        </TableView>
+                        <ComboBox fx:id="cbPesquisaFiltro" layoutX="456.0" layoutY="21.0" onInputMethodTextChanged="#pesquisarLivro" prefHeight="25.0" prefWidth="99.0" />
+                     </children>
+                  </Pane>
+               </content></Tab>
+            <Tab text="Cadastro">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="346.0" layoutX="14.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="275.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="346.0" layoutX="311.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="275.0" />
+                        <Label layoutX="72.0" layoutY="21.0" text="CADASTRAR LEITOR">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="22.0" layoutY="41.0" text="Nome:" />
+                        <Label layoutX="22.0" layoutY="83.0" text="CPF:" />
+                        <Label layoutX="22.0" layoutY="126.0" text="Rua:" />
+                        <Label layoutX="22.0" layoutY="175.0" text="Bairro:" />
+                        <Label layoutX="22.0" layoutY="217.0" text="Telefone:" />
+                        <Label layoutX="22.0" layoutY="263.0" text="Email:" />
+                        <TextField fx:id="tfCadLeitorNome" layoutX="22.0" layoutY="58.0" prefHeight="25.0" prefWidth="255.0" />
+                        <TextField fx:id="tfCadLeitorCpf" layoutX="22.0" layoutY="100.0" prefHeight="25.0" prefWidth="255.0" />
+                        <TextField fx:id="tfCadLeitorRua" layoutX="22.0" layoutY="144.0" prefHeight="25.0" prefWidth="158.0" />
+                        <TextField fx:id="tfCadLeitorBairro" layoutX="22.0" layoutY="192.0" prefHeight="25.0" prefWidth="256.0" />
+                        <TextField fx:id="tfCadLeitorTelefone" layoutX="22.0" layoutY="234.0" prefHeight="25.0" prefWidth="255.0" />
+                        <TextField fx:id="tfCadLeitorEmail" layoutX="22.0" layoutY="280.0" prefHeight="25.0" prefWidth="255.0" />
+                        <TextField fx:id="tfCadLivroAno" layoutX="324.0" layoutY="234.0" prefHeight="25.0" prefWidth="255.0" />
+                        <TextField fx:id="tfCadLivroEdicao" layoutX="324.0" layoutY="192.0" prefHeight="25.0" prefWidth="255.0" />
+                        <TextField fx:id="tfCadLivroCategoria" layoutX="324.0" layoutY="144.0" prefHeight="25.0" prefWidth="255.0" />
+                        <TextField fx:id="tfCadLivroISPN" layoutX="324.0" layoutY="100.0" prefHeight="25.0" prefWidth="255.0" />
+                        <TextField fx:id="tfCadLivroTitulo" layoutX="324.0" layoutY="58.0" prefHeight="25.0" prefWidth="253.0" />
+                        <Label layoutX="324.0" layoutY="217.0" text="Ano:" />
+                        <Label layoutX="324.0" layoutY="175.0" text="Edição:" />
+                        <Label layoutX="324.0" layoutY="126.0" text="Categoria:" />
+                        <Label layoutX="324.0" layoutY="83.0" text="ISPN:" />
+                        <Label layoutX="324.0" layoutY="41.0" text="Titulo:" />
+                        <Label layoutX="374.0" layoutY="21.0" text="CADASTRAR LIVRO">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="191.0" layoutY="126.0" text="Num:" />
+                        <TextField fx:id="tfCadLeitorNum" layoutX="191.0" layoutY="144.0" prefHeight="25.0" prefWidth="84.0" />
+                        <Button fx:id="btnCadastrarLeitor" layoutX="113.0" layoutY="318.0" mnemonicParsing="false" onAction="#cadastrarLeitor" text="CADASTRAR" />
+                        <Button fx:id="btnCadastrarLivro" layoutX="412.0" layoutY="318.0" mnemonicParsing="false" onAction="#cadastrarLivro" text="CADASTRAR" />
+                        <Label layoutX="322.0" layoutY="263.0" text="Autor:" />
+                        <TextField fx:id="tfCadLivroAutor" layoutX="324.0" layoutY="280.0" prefHeight="25.0" prefWidth="254.0" />
+                     </children>
+                  </Pane>
+               </content></Tab>
+            <Tab text="Realizar Empréstimos">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="346.0" layoutX="14.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="275.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="346.0" layoutX="311.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="275.0" />
+                        <Label layoutX="73.0" layoutY="20.0" text="REALIZAR EMPRÉSTIMOS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="362.0" layoutY="20.0" text="CONSULTAR EMPRÉSTIMOS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="33.0" layoutY="40.0" text="Titulo do Livro:" />
+                        <TextField layoutX="33.0" layoutY="57.0" prefHeight="25.0" prefWidth="216.0" />
+                        <TextField layoutX="33.0" layoutY="171.0" prefHeight="25.0" prefWidth="216.0" />
+                        <Label layoutX="33.0" layoutY="154.0" text="Titulo do Livro:" />
+                        <Label layoutX="41.0" layoutY="283.0" text="Dia" />
+                        <Label layoutX="106.0" layoutY="283.0" text="Mês" />
+                        <Label layoutX="29.0" layoutY="266.0" text="Data Atual:" />
+                        <Label layoutX="169.0" layoutY="283.0" text="Ano" />
+                        <Button layoutX="114.0" layoutY="332.0" mnemonicParsing="false" text="CADASTRAR" />
+                        <TextField layoutX="41.0" layoutY="304.0" prefHeight="25.0" prefWidth="46.0" />
+                        <TextField layoutX="102.0" layoutY="304.0" prefHeight="25.0" prefWidth="45.0" />
+                        <TextField layoutX="169.0" layoutY="304.0" prefHeight="25.0" prefWidth="44.0" />
+                        <RadioButton layoutX="340.0" layoutY="52.0" mnemonicParsing="false" text="Funcionario" />
+                        <RadioButton layoutX="426.0" layoutY="52.0" mnemonicParsing="false" text="Leitor" />
+                        <RadioButton layoutX="486.0" layoutY="52.0" mnemonicParsing="false" text="Livro" />
+                        <TextField layoutX="324.0" layoutY="82.0" prefHeight="25.0" prefWidth="215.0" />
+                        <TextArea layoutX="327.0" layoutY="130.0" prefHeight="191.0" prefWidth="244.0" />
+                        <Button layoutX="411.0" layoutY="332.0" mnemonicParsing="false" text="CADASTRAR" />
+                        <TableView layoutX="33.0" layoutY="88.0" prefHeight="54.0" prefWidth="217.0">
+                          <columns>
+                            <TableColumn prefWidth="42.0" text="Livro" />
+                            <TableColumn prefWidth="49.0" text="Autor" />
+                              <TableColumn prefWidth="134.0" text="Edição" />
+                          </columns>
+                        </TableView>
+                        <TableView layoutX="33.0" layoutY="204.0" prefHeight="57.0" prefWidth="219.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </Pane>
+               </content></Tab>
+            <Tab text="Consultar Empréstimos">
+               <content>
+                  <Pane layoutX="1.0" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <RadioButton layoutX="65.0" layoutY="13.0" mnemonicParsing="false" text="Funcionario" />
+                        <RadioButton layoutX="274.0" layoutY="13.0" mnemonicParsing="false" text="Leitor" />
+                        <RadioButton layoutX="447.0" layoutY="13.0" mnemonicParsing="false" text="Livro" />
+                        <TextField layoutX="17.0" layoutY="42.0" prefHeight="25.0" prefWidth="567.0" />
+                        <Button layoutX="255.0" layoutY="340.0" mnemonicParsing="false" text="CADASTRAR" />
+                        <TableView layoutX="17.0" layoutY="83.0" prefHeight="247.0" prefWidth="566.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="LIVRO" />
+                            <TableColumn prefWidth="102.0" text="LEITOR" />
+                              <TableColumn prefWidth="48.0" text="DATA DE EMPRESTIMO" />
+                              <TableColumn prefWidth="75.0" text="DATA DE DEVOLUÇÃO" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
             <Tab text="Reserva" />
         </tabs>
       </TabPane>

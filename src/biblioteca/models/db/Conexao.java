@@ -20,7 +20,7 @@ public class Conexao {
 	private static final String DB_IP = "localhost";
 	private static final String DB_BANCO = "biblioteca";
 	private static final String DB_USUARIO = "root";
-	private static final String DB_SENHA = "123";
+	private static final String DB_SENHA = "";
 
 	public static Connection conexao;
 

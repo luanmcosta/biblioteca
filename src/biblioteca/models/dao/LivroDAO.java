@@ -59,7 +59,7 @@ public class LivroDAO {
 	public ArrayList<Livro> consultarLivros(String coluna, String valor) {
 		
 		ArrayList<Livro> livros = new ArrayList<>();
-		String query = "SELECT * FROM " + tabelaLivros + " WHERE " + coluna + "='" + valor + "'";
+		String query = "SELECT * FROM " + tabelaLivros + " WHERE " + coluna + " LIKE '%" + valor + "%'";
 		
 		try {
 			declaracao = conexao.prepareStatement(query);

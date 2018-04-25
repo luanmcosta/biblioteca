@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Users/Jheyele%20Raquel/Documents/NetBeansProjects/biblioteca/src/biblioteca/controllers/LeitorController.java</file>
             <file>file:/C:/Users/Jheyele%20Raquel/Documents/NetBeansProjects/biblioteca/src/biblioteca/controllers/LivroController.java</file>
+            <file>file:/C:/Users/Jheyele%20Raquel/Documents/NetBeansProjects/biblioteca/src/biblioteca/models/dao/LivroDAO.java</file>
             <file>file:/C:/Users/Jheyele%20Raquel/Documents/NetBeansProjects/biblioteca/src/biblioteca/controllers/views/TelaPrincipalFXMLController.java</file>
         </group>
     </open-files>

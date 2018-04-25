@@ -81,6 +81,32 @@ public class TelaPrincipalFXMLController implements Initializable {
     private TableView tvPesquisaTabela;
     
     
+    // campos de emprestimo
+    
+    @FXML
+    private TextField tfEmprestimoLivro;
+    
+    @FXML
+    private TextField tfEmprestimoIdLivro;
+    
+    @FXML
+    private TextField tfEmprestimoLeitor;
+    
+    @FXML
+    private TextField tfEmprestimoIdLeitor;
+    
+    @FXML
+    private Button btnEmprestimoAdicionar;
+    
+    @FXML
+    private Button btnEmprestimoCadastrar;
+    
+    @FXML
+    private TableView tvEmprestimoLivros;
+    
+    @FXML
+    private TableView tvEmprestimoLeitores;
+    
     
     /**
      * Initializes the controller class.
@@ -93,16 +119,54 @@ public class TelaPrincipalFXMLController implements Initializable {
         // Pesquisa
         TableColumn colunaId = (TableColumn) tvPesquisaTabela.getColumns().get(0);
         TableColumn colunaTitulo = (TableColumn) tvPesquisaTabela.getColumns().get(1);
+        TableColumn colunaAutor = (TableColumn) tvPesquisaTabela.getColumns().get(2);
+        TableColumn colunaEdicao = (TableColumn) tvPesquisaTabela.getColumns().get(3);
+        TableColumn colunaEstado = (TableColumn) tvPesquisaTabela.getColumns().get(4);
         
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaTitulo.setCellValueFactory(new PropertyValueFactory("titulo"));
+        colunaAutor.setCellValueFactory(new PropertyValueFactory("autor"));
+        colunaEdicao.setCellValueFactory(new PropertyValueFactory("edicao"));
+        colunaEstado.setCellValueFactory(new PropertyValueFactory("status"));
         
         cbPesquisaFiltro.getItems().add("id");
         cbPesquisaFiltro.getItems().add("titulo");
         cbPesquisaFiltro.getItems().add("autor");
         cbPesquisaFiltro.getItems().add("status");
+        cbPesquisaFiltro.getItems().add("edicao");
         
         tvPesquisaTabela.getItems().addAll(livroController.listarLivros());
+        
+        //Emprestimo Livro
+        TableColumn colunaIdEm = (TableColumn) tvEmprestimoLivros.getColumns().get(0);
+        TableColumn colunaTituloEm = (TableColumn) tvEmprestimoLivros.getColumns().get(1);
+        TableColumn colunaAutorEm = (TableColumn) tvEmprestimoLivros.getColumns().get(2);
+        TableColumn colunaEdicaoEm = (TableColumn) tvEmprestimoLivros.getColumns().get(3);
+        TableColumn colunaEstadoEm = (TableColumn) tvEmprestimoLivros.getColumns().get(4);
+        
+        colunaIdEm.setCellValueFactory(new PropertyValueFactory("id"));
+        colunaTituloEm.setCellValueFactory(new PropertyValueFactory("titulo"));
+        colunaAutorEm.setCellValueFactory(new PropertyValueFactory("autor"));
+        colunaEdicaoEm.setCellValueFactory(new PropertyValueFactory("edicao"));
+        colunaEstadoEm.setCellValueFactory(new PropertyValueFactory("status"));
+        
+        tvEmprestimoLivros.getItems().addAll(livroController.listarLivros());
+        
+        //Emprestimo Leitor
+        
+        TableColumn colunaIdLeitor = (TableColumn) tvEmprestimoLeitores.getColumns().get(0);
+        TableColumn colunaNomeLeitor = (TableColumn) tvEmprestimoLeitores.getColumns().get(1);
+        TableColumn colunaCPFLeitor = (TableColumn) tvEmprestimoLeitores.getColumns().get(2);
+        TableColumn colunaTelefoneLeitor = (TableColumn) tvEmprestimoLeitores.getColumns().get(3);
+        
+        colunaIdLeitor.setCellValueFactory(new PropertyValueFactory("id"));
+        colunaNomeLeitor.setCellValueFactory(new PropertyValueFactory("nome"));
+        colunaCPFLeitor.setCellValueFactory(new PropertyValueFactory("cpf"));
+        colunaTelefoneLeitor.setCellValueFactory(new PropertyValueFactory("telefone"));
+    
+        tvEmprestimoLeitores.getItems().addAll(leitorController.listarLeitores());
+        
+        
         
     } 
     
@@ -138,9 +202,26 @@ public class TelaPrincipalFXMLController implements Initializable {
         String autor = tfCadLivroAutor.getText();
         
         Livro livro;
-        livro = livroController.cadastrarLivro(titulo, autor, categoria, "disponivel", ano, ISPN,edicao);
+        livro = livroController.cadastrarLivro(titulo, autor, categoria, "D", ano, ISPN,edicao);
     }
     
+    public void pesquisaLivroEmprestimo(){
+        String coluna = "titulo";
+        
+        ArrayList livrosFiltrados = livroController.buscarLivros(coluna, tfEmprestimoLivro.getText());
+        
+        tvEmprestimoLivros.getItems().clear();
+        tvEmprestimoLivros.getItems().addAll(livrosFiltrados);
+    }
+    
+    public void pesquisaLeitorEmprestimo(){
+        String coluna = "nome";
+        
+        Leitor leitoresFiltrados = leitorController.buscarLeitor(coluna, tfEmprestimoLeitor.getText());
+        
+        tvEmprestimoLeitores.getItems().clear();
+        tvEmprestimoLeitores.getItems().addAll(leitoresFiltrados);
+    }
     
     
     

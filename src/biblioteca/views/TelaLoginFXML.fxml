@@ -21,24 +21,23 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label layoutX="46.0" layoutY="36.0" prefHeight="35.0" prefWidth="332.0" text="SISTEMA BIBLIOTECÁRIO">
+      <Label layoutX="46.0" layoutY="36.0" prefHeight="35.0" prefWidth="332.0" text="SISTEMA BIBLIOTECÁRIO" textFill="WHITE">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="117.0" prefHeight="20.0" prefWidth="54.0" text="Login:">
+      <Label layoutX="46.0" layoutY="117.0" prefHeight="20.0" prefWidth="54.0" text="Login:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="173.0" text="Senha:">
+      <Label layoutX="46.0" layoutY="173.0" text="Senha:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tfLogin" layoutX="98.0" layoutY="114.0" prefHeight="25.0" prefWidth="253.0" />
-      <TextField fx:id="tfSenha" layoutX="98.0" layoutY="170.0" prefHeight="25.0" prefWidth="253.0" />
       <Button fx:id="btnEntrar" layoutX="98.0" layoutY="214.0" mnemonicParsing="false" onAction="#autenticar" text="ENTRAR" />
-      <Hyperlink layoutX="225.0" layoutY="203.0" text="Cadastrar Novo Usuario" visited="true" />
+      <PasswordField fx:id="tfSenha" layoutX="100.0" layoutY="168.0" prefHeight="25.0" prefWidth="247.0" />
    </children>
 </Pane>

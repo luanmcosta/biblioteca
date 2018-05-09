@@ -5,6 +5,8 @@
  */
 package biblioteca.models;
 
+import static java.sql.Types.NULL;
+
 /**
  *
  * @author luanm
@@ -133,7 +135,7 @@ public class Livro {
 	}
 	
 	public boolean emprestado(){
-		return getEmprestimo() != 0;
+		return getEmprestimo() != NULL;
 	}
 
 	

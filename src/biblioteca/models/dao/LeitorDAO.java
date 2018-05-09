@@ -69,6 +69,34 @@ public class LeitorDAO {
 		return true;
 	}
 	
+        public ArrayList<Leitor> buscarLeitores(String coluna, String valor){
+            ArrayList<Leitor> leitores = new ArrayList<>();
+            String query = "SELECT p.*, l.quantidade_livros, l.bloqueio, l.id_pessoa FROM " + tabelaPessoas + " p JOIN " + tabelaLeitores + " l ON p.id_leitor = l.id WHERE p.id_leitor IS NOT NULL AND p." + coluna + " LIKE '%" + valor + "%' ";
+            
+            try {
+
+                    declaracao = conexao.prepareStatement(query);
+                    //System.out.println(declaracao.toString());
+                    ResultSet res = declaracao.executeQuery(); 
+                    //System.out.println("Erro");
+                    while (res.next()) {
+                        Leitor leitor = new Leitor();
+                        leitor.setId(res.getInt("id"));
+                        leitor.setNome(res.getString("nome"));
+                        leitor.setCpf(res.getString("cpf"));
+                        leitor.setRua(res.getString("rua"));
+                        leitor.setBairro(res.getString("bairro"));
+                        leitor.setEmail(res.getString("email"));
+                        leitor.setTelefone(res.getString("telefone"));
+                        leitor.setQuantidadeLivros(res.getInt("quantidade_livros"));
+                        leitor.setBloqueio(res.getBoolean("bloqueio"));
+                        leitores.add(leitor);
+                    }
+            } catch (SQLException ex) {
+                    System.out.println("Erro ao tentar listar os leitores.\nErro: " + ex.getErrorCode());
+            }
+            return leitores;
+	}
         
 	public ArrayList<Leitor> listarLeitores(){
             

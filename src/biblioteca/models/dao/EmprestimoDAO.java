@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static java.sql.Types.NULL;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class EmprestimoDAO {
 			declaracao = conexao.prepareStatement(inserirEmprestimo, Statement.RETURN_GENERATED_KEYS);
 			declaracao.setInt(1, emprestimo.getFuncionario().getId());
 			declaracao.setInt(2, emprestimo.getLeitor().getId());
-			declaracao.setDate(3, new java.sql.Date(emprestimo.getDataDevolucao().getTime()));
+			declaracao.setDate(3, new java.sql.Date(emprestimo.getDataEmprestimo().getTime()));
 			declaracao.setDate(4, new java.sql.Date(emprestimo.getDataDevolucao().getTime()));
 			System.out.println(declaracao.toString());
 			int idEmprestimo = inserirRegistro();
@@ -128,20 +129,19 @@ public class EmprestimoDAO {
 		// Atualizar livros
 		LivroDAO livroDAO = new LivroDAO();
 		for(Livro livro: emprestimo.getLivros()){
-			livro.setEmprestimo(0);
+			livro.setEmprestimo(NULL);
 			livroDAO.atualizarLivro(livro);
 		}
 		return removerEmprestimo(emprestimo.getId());
 	}
+        
 	
 	public boolean removerEmprestimo(int id) {
 		try {
 			String query = "DELETE FROM " + tabelaEmprestimos + " WHERE id = ?";
 			declaracao = conexao.prepareStatement(query);
 			declaracao.setInt(1, id);
-			
-			
-			
+
 			return declaracao.executeUpdate() != 0;
 		} catch (SQLException ex) {
 			System.out.println("Erro ao tentar remover emprestimo.\nErro: " + ex.getErrorCode());

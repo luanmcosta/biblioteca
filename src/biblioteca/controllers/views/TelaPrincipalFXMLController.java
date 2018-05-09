@@ -9,11 +9,14 @@ import biblioteca.controllers.EmprestimoController;
 import biblioteca.controllers.LeitorController;
 import biblioteca.controllers.LivroController;
 import biblioteca.controllers.ReservaController;
+import biblioteca.models.Emprestimo;
 import biblioteca.models.Funcionario;
 import biblioteca.models.Leitor;
 import biblioteca.models.Livro;
+import biblioteca.models.Reserva;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
+import static java.sql.Types.NULL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -38,6 +41,7 @@ public class TelaPrincipalFXMLController implements Initializable {
     private final LeitorController leitorController = new LeitorController();
     private final LivroController livroController = new LivroController();
     private final EmprestimoController emprestimoController = new EmprestimoController();
+    private final ReservaController reservaController = new ReservaController();
     // Campos do Painel de Cadastro de leitores
     @FXML
     private TextField tfCadLeitorNome;
@@ -177,6 +181,24 @@ public class TelaPrincipalFXMLController implements Initializable {
     @FXML
     private Button DevolverLivro;
     
+    // consulta de reservas
+    
+    @FXML
+    private TableView tvConsultaReserva;
+    
+    @FXML
+    private TableView tvConsultaReservaLivro;
+    
+    @FXML
+    private TextField tfConsultaReserva;
+    
+    @FXML
+    private Button btnConsultaReservaVisualizar;
+    
+    @FXML
+    private Button btnConsultaReservaEncerrar;
+
+    
     // Informações da Tela Inicio
     @FXML
     private Label lblInicioNomeFuncionario;
@@ -202,13 +224,13 @@ public class TelaPrincipalFXMLController implements Initializable {
         colunaEdicao.setCellValueFactory(new PropertyValueFactory("edicao"));
         colunaEstado.setCellValueFactory(new PropertyValueFactory("status"));
         
-        cbPesquisaFiltro.getItems().add("id");
         cbPesquisaFiltro.getItems().add("titulo");
         cbPesquisaFiltro.getItems().add("autor");
         cbPesquisaFiltro.getItems().add("status");
         cbPesquisaFiltro.getItems().add("edicao");
         
         tvPesquisaTabela.getItems().addAll(livroController.listarLivros());
+        cbPesquisaFiltro.getSelectionModel().select(0);
         
         
         // Pesquisa Leitor
@@ -222,12 +244,12 @@ public class TelaPrincipalFXMLController implements Initializable {
         colunaCPFLeitor2.setCellValueFactory(new PropertyValueFactory("cpf"));
         colunaTelefoneLeitor2.setCellValueFactory(new PropertyValueFactory("telefone"));
         
-        cbPesquisaFiltroLeitor.getItems().add("id");
         cbPesquisaFiltroLeitor.getItems().add("nome");
         cbPesquisaFiltroLeitor.getItems().add("cpf");
         cbPesquisaFiltroLeitor.getItems().add("telefone");
         
         tvPesquisaTabelaLeitor.getItems().addAll(leitorController.listarLeitores());
+        cbPesquisaFiltroLeitor.getSelectionModel().select(0);
         
         //Emprestimo Livro
         TableColumn colunaIdEm = (TableColumn) tvEmprestimoLivros.getColumns().get(0);
@@ -282,7 +304,7 @@ public class TelaPrincipalFXMLController implements Initializable {
         colunaEdicaoRe.setCellValueFactory(new PropertyValueFactory("edicao"));
         colunaEstadoRe.setCellValueFactory(new PropertyValueFactory("status"));
         
-        tvReservaLivros.getItems().addAll(livroController.listarLivros());
+        tvReservaLivros.getItems().addAll(livroController.listarLivrosEmprestados());
         
         //Reserva Leitor
         
@@ -322,12 +344,33 @@ public class TelaPrincipalFXMLController implements Initializable {
         colunaLivroEdicao.setCellValueFactory(new PropertyValueFactory("edicao"));
         
         
+        // Consulta de reserva
+        
+        TableColumn colunaReservaLivro = (TableColumn) tvConsultaReserva.getColumns().get(0);
+        TableColumn colunaReservaLeitor = (TableColumn) tvConsultaReserva.getColumns().get(1);
+        TableColumn colunaReservaDataEmprestimo = (TableColumn) tvConsultaReserva.getColumns().get(2);
+      
+        colunaReservaLivro.setCellValueFactory(new PropertyValueFactory("id"));
+        colunaReservaLeitor.setCellValueFactory(new PropertyValueFactory("leitor"));
+        colunaReservaDataEmprestimo.setCellValueFactory(new PropertyValueFactory("dataReserva"));
+        
+        tvConsultaReserva.getItems().addAll(reservaController.listarReservas());
+        
+        TableColumn colunaReservaLivroTitulo = (TableColumn) tvConsultaReservaLivro.getColumns().get(0);
+        TableColumn colunaReservaLivroAutor = (TableColumn) tvConsultaReservaLivro.getColumns().get(1);
+        TableColumn colunaReservaLivroEdicao = (TableColumn) tvConsultaReservaLivro.getColumns().get(2);
+      
+        colunaReservaLivroTitulo.setCellValueFactory(new PropertyValueFactory("titulo"));
+        colunaReservaLivroAutor.setCellValueFactory(new PropertyValueFactory("autor"));
+        colunaReservaLivroEdicao.setCellValueFactory(new PropertyValueFactory("edicao"));
+        
+       
     } 
     
     public void pesquisarLivro(){
         String filtroSelecionado = (String) cbPesquisaFiltro.getValue();
         
-        ArrayList livrosFiltrados = livroController.buscarLivros(filtroSelecionado, tfPesquisaFiltro.getText());
+        ArrayList<Livro> livrosFiltrados = livroController.buscarLivros(filtroSelecionado, tfPesquisaFiltro.getText());
         
         tvPesquisaTabela.getItems().clear();
         tvPesquisaTabela.getItems().addAll(livrosFiltrados);
@@ -340,12 +383,18 @@ public class TelaPrincipalFXMLController implements Initializable {
         System.out.println(id);
         livroController.removerLivro(id);
         tvPesquisaTabela.getItems().clear();
+        atualizarTabelas();
     }
     
     public void pesquisarLeitor(){
+//        if(tfPesquisaFiltroLeitor.getText().length() == 0){
+//            atualizarTabelas();
+//            return;
+//        }
+//        
         String filtroSelecionado = (String) cbPesquisaFiltroLeitor.getValue();
         
-        Leitor leitorFiltrados = leitorController.buscarLeitor(filtroSelecionado, tfPesquisaFiltroLeitor.getText());
+        ArrayList<Leitor> leitorFiltrados = leitorController.buscarLeitores(filtroSelecionado, tfPesquisaFiltroLeitor.getText());
         
         
         tvPesquisaTabelaLeitor.getItems().clear();
@@ -358,6 +407,7 @@ public class TelaPrincipalFXMLController implements Initializable {
         
         leitorController.removerLeitor(id);
         tvPesquisaTabelaLeitor.getItems().clear();
+        atualizarTabelas();
     }
     
     public void cadastrarLeitor(){
@@ -379,7 +429,7 @@ public class TelaPrincipalFXMLController implements Initializable {
         tfCadLeitorBairro.setText("");
         tfCadLeitorTelefone.setText("");
         tfCadLeitorEmail.setText("");
-        
+        atualizarTabelas();
     
     }
     
@@ -400,6 +450,7 @@ public class TelaPrincipalFXMLController implements Initializable {
         tfCadLivroEdicao.setText("");
         tfCadLivroAno.setText("");
         tfCadLivroAutor.setText("");
+        atualizarTabelas();
         
     }
     
@@ -415,7 +466,7 @@ public class TelaPrincipalFXMLController implements Initializable {
     public void pesquisaLeitorEmprestimo(){
         String coluna = "nome";
         
-        Leitor leitoresFiltrados = leitorController.buscarLeitor(coluna, tfEmprestimoLeitor.getText());
+        ArrayList <Leitor> leitoresFiltrados = leitorController.buscarLeitores(coluna, tfEmprestimoLeitor.getText());
         
         tvEmprestimoLeitores.getItems().clear();
         tvEmprestimoLeitores.getItems().addAll(leitoresFiltrados);
@@ -449,9 +500,14 @@ public class TelaPrincipalFXMLController implements Initializable {
         tvEmprestimoLista.getItems().addAll(livrosSelecionadosEmprestimo);
     }
     
+    
     public void cadastrarEmprestimo(){
-        emprestimoController.realizarEmprestimo(livrosSelecionadosEmprestimo, leitorSelecionadoEmprestimo, funcionario, new Date(), new Date());
-        
+        Date dataEmprestimo = new Date();
+        Date dataDevolucao = new Date(dataEmprestimo.getTime() + (1000 * 60 * 60 * 24) * 7);
+        System.out.println(dataEmprestimo.toString());
+        System.out.println(dataDevolucao.toString());
+        emprestimoController.realizarEmprestimo(livrosSelecionadosEmprestimo, leitorSelecionadoEmprestimo, funcionario, dataEmprestimo, dataDevolucao);
+        atualizarTabelas();
     }
     
     public void pesquisaLivroReserva(){
@@ -466,7 +522,7 @@ public class TelaPrincipalFXMLController implements Initializable {
     public void pesquisaLeitorReserva(){
         String coluna = "nome";
         
-        Leitor leitoresFiltrados = leitorController.buscarLeitor(coluna, tfReservaLeitor.getText());
+        ArrayList <Leitor> leitoresFiltrados = leitorController.buscarLeitores(coluna, tfReservaLeitor.getText());
         
         tvReservaLeitores.getItems().clear();
         tvReservaLeitores.getItems().addAll(leitoresFiltrados);
@@ -490,8 +546,89 @@ public class TelaPrincipalFXMLController implements Initializable {
         
         tfReservaLeitor.setText("");
         tfReservaLivro.setText("");
+        atualizarTabelas();
     }
     
+     
+     
+     public void visualizarDadosEmprestimo(){
+         Emprestimo emprestimoSelecionado = (Emprestimo) tvConsultaEmprestimo.getSelectionModel().getSelectedItem();
+         tvConsultaEmprestimoLivro.getItems().clear();
+         tvConsultaEmprestimoLivro.getItems().addAll(emprestimoSelecionado.getLivros());
+
+     }
+    
+     public void devolverLivroEmprestimo(){
+         Livro livroSelecionado = (Livro) tvConsultaEmprestimoLivro.getSelectionModel().getSelectedItem();
+         livroSelecionado.setEmprestimo(NULL);
+         livroController.atualizarLivro(livroSelecionado);
+         tvConsultaEmprestimoLivro.getItems().remove(livroSelecionado);
+     }
+     
+     public void renovarEmprestimo(){
+         Emprestimo emprestimoSelecionado = (Emprestimo) tvConsultaEmprestimo.getSelectionModel().getSelectedItem();
+         emprestimoSelecionado.setDataDevolucao(new Date());
+         emprestimoController.atualizarEmprestimo(emprestimoSelecionado);
+     }
+     
+     public void encerrarEmprestimo(){
+         Emprestimo emprestimoSelecionado = (Emprestimo) tvConsultaEmprestimo.getSelectionModel().getSelectedItem();
+         emprestimoController.removerEmprestimo(emprestimoSelecionado.getId());
+         tvConsultaEmprestimo.getItems().remove(emprestimoSelecionado);
+         
+         atualizarTabelas();
+     }
+     
+     
+     // Reservas
+     public void visualizarDadosReserva(){
+         Reserva reservaSelecionado = (Reserva) tvConsultaReserva.getSelectionModel().getSelectedItem();
+         tvConsultaReservaLivro.getItems().clear();
+         tvConsultaReservaLivro.getItems().addAll(reservaSelecionado.getLivro());
+
+     }
     
      
+     public void encerrarReserva(){
+         Reserva reservaSelecionado = (Reserva) tvConsultaReserva.getSelectionModel().getSelectedItem();
+         reservaController.removerReserva(reservaSelecionado.getId());
+         tvConsultaEmprestimo.getItems().remove(reservaSelecionado);
+         atualizarTabelas();
+     }
+
+     
+     
+     public void atualizarTabelas(){
+         // Limpar todas as tabelas
+         tvConsultaEmprestimo.getItems().clear();
+         tvConsultaEmprestimoLivro.getItems().clear();
+         tvEmprestimoLeitores.getItems().clear();
+         tvEmprestimoLista.getItems().clear();
+         tvEmprestimoLivros.getItems().clear();
+         tvReservaLeitores.getItems().clear();
+         tvReservaLivros.getItems().clear();
+         tvPesquisaTabelaLeitor.getItems().clear();
+         tvPesquisaTabela.getItems().clear();
+         tvConsultaEmprestimo.getItems().clear();
+         tvConsultaReserva.getItems().clear();
+         
+         // Limpar campos de pesquisa
+         tfPesquisaFiltroLeitor.setText("");
+         tfConsultaEmprestimo.setText("");
+         tfPesquisaFiltro.setText("");
+         tfEmprestimoLivro.setText("");
+         tfEmprestimoLeitor.setText("");
+         tfReservaLeitor.setText("");
+         tfReservaLivro.setText("");
+         
+         // Mostrar dados nas tabelas padrões
+         tvPesquisaTabela.getItems().addAll(livroController.listarLivros());
+         tvPesquisaTabelaLeitor.getItems().addAll(leitorController.listarLeitores());
+         tvEmprestimoLivros.getItems().addAll(livroController.listarLivrosNaoEmprestados());
+         tvEmprestimoLeitores.getItems().addAll(leitorController.listarLeitores());
+         tvConsultaEmprestimo.getItems().addAll(emprestimoController.listarEmprestimos());
+         tvReservaLivros.getItems().addAll(livroController.listarLivrosEmprestados());
+         tvReservaLeitores.getItems().addAll(leitorController.listarLeitores());
+         tvConsultaReserva.getItems().addAll(reservaController.listarReservas());
+     }
 }

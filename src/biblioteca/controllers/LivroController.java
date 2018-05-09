@@ -68,5 +68,15 @@ public class LivroController {
             return livrosNaoEmprestados;
         }
         
+        public ArrayList<Livro> listarLivrosEmprestados(){
+            // Antes de eu mandar os livros pra tabela, vou filtrar eles
+            ArrayList<Livro> livrosEmprestados = new ArrayList();
+            for (Livro livro : this.listarLivros()) {
+                if(livro.emprestado()){
+                    livrosEmprestados.add(livro);
+                }
+            }
+            return livrosEmprestados;
+        }
         
 }

@@ -91,21 +91,21 @@ ALTER TABLE leitores ADD CONSTRAINT fk_leitor_pessoa
 
 ALTER TABLE livros
     ADD CONSTRAINT fk_livro_emprestimo
-        FOREIGN KEY(id_emprestimo) REFERENCES emprestimos(id) ON DELETE CASCADE;
+        FOREIGN KEY(id_emprestimo) REFERENCES emprestimos(id) ON DELETE SET NULL;
 
 ALTER TABLE emprestimos
     ADD CONSTRAINT fk_emprestimo_funcionario
-        FOREIGN KEY(id_funcionario) REFERENCES pessoas(id) ON DELETE CASCADE,
+        FOREIGN KEY(id_funcionario) REFERENCES pessoas(id) ON DELETE SET NULL,
     ADD CONSTRAINT fk_emprestimo_leitor
-        FOREIGN KEY(id_leitor) REFERENCES pessoas(id) ON DELETE CASCADE;
+        FOREIGN KEY(id_leitor) REFERENCES pessoas(id) ON DELETE SET NULL;
 
 ALTER TABLE reservas
     ADD CONSTRAINT fk_reserva_funcionario
-        FOREIGN KEY(id_funcionario) REFERENCES pessoas(id) ON DELETE CASCADE,
+        FOREIGN KEY(id_funcionario) REFERENCES pessoas(id) ON DELETE SET NULL,
     ADD CONSTRAINT fk_reserva_leitor
-        FOREIGN KEY(id_leitor) REFERENCES pessoas(id) ON DELETE CASCADE,
+        FOREIGN KEY(id_leitor) REFERENCES pessoas(id) ON DELETE SET NULL,
     ADD CONSTRAINT fk_reserva_livro
-        FOREIGN  KEY(id_livro) REFERENCES livros(id) ON DELETE CASCADE;
+        FOREIGN  KEY(id_livro) REFERENCES livros(id) ON DELETE SET NULL;
 
 
 INSERT INTO pessoas (nome, cpf, rua, bairro, email, telefone) VALUES

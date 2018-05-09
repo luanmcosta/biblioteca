@@ -16,6 +16,11 @@
                   <Pane prefHeight="371.0" prefWidth="565.0">
                      <children>
                         <Label fx:id="lblInicioNomeFuncionario" alignment="CENTER" contentDisplay="TOP" layoutX="154.0" layoutY="51.0" prefHeight="135.0" prefWidth="280.0" text="Nome do Funcionario" />
+                        <ImageView fitHeight="600.0" fitWidth="720.0" layoutX="-47.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagens/bg.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </Pane>
                </content>
@@ -24,13 +29,13 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="tfPesquisaFiltro" layoutX="38.0" layoutY="21.0" onKeyTyped="#pesquisarLivro" prefHeight="25.0" prefWidth="413.0" />
-                        <Label layoutX="456.0" layoutY="4.0" text="Filtros:">
+                        <TextField fx:id="tfPesquisaFiltro" layoutX="40.0" layoutY="35.0" onKeyTyped="#pesquisarLivro" prefHeight="25.0" prefWidth="413.0" />
+                        <Label layoutX="461.0" layoutY="4.0" text="Filtros:">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="tvPesquisaTabela" layoutX="39.0" layoutY="65.0" prefHeight="147.0" prefWidth="509.0">
+                        <TableView fx:id="tvPesquisaTabela" layoutX="41.0" layoutY="79.0" prefHeight="147.0" prefWidth="509.0">
                           <columns>
                             <TableColumn fx:id="tcPesquisaId" prefWidth="71.0" text="Codigo" />
                             <TableColumn fx:id="tcPesquisaTitulo" prefWidth="208.0" text="Titulo" />
@@ -39,11 +44,11 @@
                               <TableColumn fx:id="tcPesquisaEstado" prefWidth="43.0" text="Estado" />
                           </columns>
                         </TableView>
-                        <ComboBox fx:id="cbPesquisaFiltro" layoutX="456.0" layoutY="21.0" onMouseClicked="#pesquisarLivro" prefHeight="25.0" prefWidth="96.0" />
-                        <Button fx:id="btnPesquisaApagar" layoutX="468.0" layoutY="224.0" mnemonicParsing="false" onAction="#apagarLivro" text="Apagar Livro" />
-                        <Button fx:id="btnPesquisaApagarLeitor" layoutX="473.0" layoutY="483.0" mnemonicParsing="false" onAction="#apagarLeitor" text="Apagar Leitor" />
-                        <ComboBox fx:id="cbPesquisaFiltroLeitor" layoutX="461.0" layoutY="280.0" onMouseClicked="#pesquisarLivro" prefHeight="25.0" prefWidth="96.0" />
-                        <TableView fx:id="tvPesquisaTabelaLeitor" layoutX="44.0" layoutY="324.0" prefHeight="147.0" prefWidth="509.0">
+                        <ComboBox fx:id="cbPesquisaFiltro" layoutX="458.0" layoutY="35.0" prefHeight="25.0" prefWidth="96.0" />
+                        <Button fx:id="btnPesquisaApagar" layoutX="470.0" layoutY="232.0" mnemonicParsing="false" onAction="#apagarLivro" text="Apagar Livro" />
+                        <Button fx:id="btnPesquisaApagarLeitor" layoutX="468.0" layoutY="500.0" mnemonicParsing="false" onAction="#apagarLeitor" text="Apagar Leitor" />
+                        <ComboBox fx:id="cbPesquisaFiltroLeitor" layoutX="461.0" layoutY="304.0" prefHeight="25.0" prefWidth="96.0" />
+                        <TableView fx:id="tvPesquisaTabelaLeitor" layoutX="44.0" layoutY="348.0" prefHeight="147.0" prefWidth="509.0">
                            <columns>
                               <TableColumn fx:id="tcPesquisaIdLeitor" prefWidth="69.0" text="Codigo" />
                               <TableColumn fx:id="tcPesquisaNomeLeitor" prefWidth="210.0" text="Nome" />
@@ -51,12 +56,22 @@
                               <TableColumn fx:id="tcPesquisaTelefoneLeitor" prefWidth="92.0" text="Telefone" />
                            </columns>
                         </TableView>
-                        <Label layoutX="461.0" layoutY="263.0" text="Filtros:">
+                        <Label layoutX="461.0" layoutY="277.0" text="Filtros:">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfPesquisaFiltroLeitor" layoutX="43.0" layoutY="280.0" onKeyTyped="#pesquisarLeitor" prefHeight="25.0" prefWidth="413.0" />
+                        <TextField fx:id="tfPesquisaFiltroLeitor" layoutX="43.0" layoutY="304.0" onKeyTyped="#pesquisarLeitor" prefHeight="25.0" prefWidth="413.0" />
+                        <Label layoutX="44.0" layoutY="16.0" text="LIVROS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="44.0" layoutY="279.0" text="LEITORES">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                </content></Tab>
@@ -170,8 +185,8 @@
                               <TableColumn prefWidth="176.0" text="Data de Devoluçao" />
                           </columns>
                         </TableView>
-                        <Button fx:id="RenovarEmprestimo" layoutX="66.0" layoutY="464.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="126.0" text="Renovar Emprestimo" />
-                        <Button fx:id="DevolverLivro" layoutX="356.0" layoutY="463.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="120.0" text="Devolver Livro" />
+                        <Button fx:id="RenovarEmprestimo" layoutX="223.0" layoutY="464.0" mnemonicParsing="false" onAction="#renovarEmprestimo" prefHeight="42.0" prefWidth="126.0" text="Renovar Emprestimo" />
+                        <Button fx:id="DevolverLivro" layoutX="395.0" layoutY="463.0" mnemonicParsing="false" onAction="#devolverLivroEmprestimo" prefHeight="44.0" prefWidth="120.0" text="Devolver Livro" />
                         <TableView fx:id="tvConsultaEmprestimoLivro" layoutX="17.0" layoutY="277.0" prefHeight="167.0" prefWidth="565.0">
                           <columns>
                             <TableColumn prefWidth="231.0" text="Titulo" />
@@ -179,7 +194,8 @@
                               <TableColumn prefWidth="102.0" text="Edição" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnConsultaEmprestimoVisualizar" layoutX="506.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Visualizar " />
+                        <Button fx:id="btnConsultaEmprestimoVisualizar" layoutX="506.0" layoutY="53.0" mnemonicParsing="false" onAction="#visualizarDadosEmprestimo" prefHeight="25.0" prefWidth="77.0" text="Visualizar " />
+                        <Button fx:id="btnEncerrarEmprestimo" layoutX="52.0" layoutY="464.0" mnemonicParsing="false" onAction="#encerrarEmprestimo" prefHeight="42.0" prefWidth="126.0" text="Encerrar Emprestimo" />
                      </children>
                   </Pane>
                </content>
@@ -218,6 +234,35 @@
                      </children>
                   </Pane>
                </content></Tab>
+            <Tab text="Consulta Reservas">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="523.0" prefWidth="600.0">
+                           <children>
+                              <TextField fx:id="tfConsultaReserva" layoutX="17.0" layoutY="53.0" prefHeight="25.0" prefWidth="477.0" />
+                              <TableView fx:id="tvConsultaReserva" layoutX="17.0" layoutY="105.0" prefHeight="143.0" prefWidth="566.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="Codigo" />
+                                    <TableColumn prefWidth="215.0" text="Leitor" />
+                                    <TableColumn prefWidth="275.0" text="Data de Reserva" />
+                                 </columns>
+                              </TableView>
+                              <TableView fx:id="tvConsultaReservaLivro" layoutX="17.0" layoutY="277.0" prefHeight="167.0" prefWidth="565.0">
+                                 <columns>
+                                    <TableColumn prefWidth="231.0" text="Titulo" />
+                                    <TableColumn prefWidth="231.0" text="Autor" />
+                                    <TableColumn prefWidth="102.0" text="Edição" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnConsultaReservaVisualizar" layoutX="506.0" layoutY="53.0" mnemonicParsing="false" onAction="#visualizarDadosReserva" prefHeight="25.0" prefWidth="77.0" text="Visualizar " />
+                              <Button fx:id="btnConsultaReservaEncerrar" layoutX="237.0" layoutY="459.0" mnemonicParsing="false" onAction="#encerrarReserva" prefHeight="42.0" prefWidth="126.0" text="Encerrar Reserva" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

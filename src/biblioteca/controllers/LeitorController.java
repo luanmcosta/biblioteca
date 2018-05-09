@@ -35,6 +35,10 @@ public class LeitorController {
     public boolean atualizarLeitor(Leitor leitor){
             return leitorDAO.atualizarLeitor(leitor);
     }
+    
+    public ArrayList<Leitor> buscarLeitores(String dado, String valor){
+        return leitorDAO.buscarLeitores(dado, valor);
+    }
 
     public ArrayList<Leitor> listarLeitores(){
             return leitorDAO.listarLeitores();

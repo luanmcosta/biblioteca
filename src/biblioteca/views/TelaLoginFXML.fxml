@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.controllers.views.TelaLoginFXMLController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="356.0" layoutX="6.0" layoutY="6.0" stroke="WHITE" strokeType="INSIDE" width="406.0">
+         <fill>
+            <LinearGradient endX="0.11904761904761904" endY="0.8857142857142857" startX="0.14285714285714288" startY="0.24285714285714294">
+               <stops>
+                  <Stop color="#3070a8" />
+                  <Stop color="#3172a3" offset="0.007662835249042145" />
+                  <Stop color="#306fa6" offset="0.007662835249042145" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Label layoutX="46.0" layoutY="36.0" prefHeight="35.0" prefWidth="332.0" text="SISTEMA BIBLIOTECÁRIO">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="117.0" prefHeight="20.0" prefWidth="54.0" text="Login:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="173.0" text="Senha:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfLogin" layoutX="98.0" layoutY="114.0" prefHeight="25.0" prefWidth="253.0" />
+      <TextField fx:id="tfSenha" layoutX="98.0" layoutY="170.0" prefHeight="25.0" prefWidth="253.0" />
+      <Button fx:id="btnEntrar" layoutX="98.0" layoutY="214.0" mnemonicParsing="false" onAction="#autenticar" text="ENTRAR" />
+      <Hyperlink layoutX="225.0" layoutY="203.0" text="Cadastrar Novo Usuario" visited="true" />
+   </children>
+</Pane>

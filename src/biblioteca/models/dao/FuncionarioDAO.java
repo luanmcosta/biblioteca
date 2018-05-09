@@ -101,12 +101,15 @@ public class FuncionarioDAO {
 	public Funcionario consultarFuncionarioLogin(String usuario, String senha) {
 		
 		Funcionario funcionario = null;
-		String query = "SELECT p.*, f.usuario, f.senha, f.id_pessoa FROM " + tabelaPessoas + " p JOIN " + tabelaFuncionarios + " f ON p.id_funcionario = f.id WHERE p.id_funcionario IS NOT NULL AND usuario = ? AND senha = ?";
+		//String query = "SELECT p.*, f.usuario, f.senha, f.id_pessoa FROM " + tabelaPessoas + " p JOIN " + tabelaFuncionarios + " f ON p.id_funcionario = f.id WHERE p.id_funcionario IS NOT NULL AND usuario = ? AND senha = ?";
+		String query = "SELECT p.*, f.usuario, f.senha, f.id_pessoa FROM " + tabelaPessoas + " p JOIN " + tabelaFuncionarios + " f ON p.id_funcionario = f.id WHERE p.id_funcionario IS NOT NULL AND f.usuario = '" + usuario + "' AND f.senha =  '" + senha +"'";
 		
+                
+                
 		try {
 			declaracao = conexao.prepareStatement(query);
-			declaracao.setString(1, usuario);
-			declaracao.setString(2, senha);
+			//declaracao.setString(1, usuario);
+			//declaracao.setString(2, senha);
 			//System.out.println(declaracao.toString());
 			ResultSet res = declaracao.executeQuery(); 
 

@@ -5,9 +5,11 @@
  */
 package biblioteca.models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 /**
  *
@@ -86,5 +88,24 @@ public class Emprestimo {
 	public void setDataDevolucao(Date dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
-
+        
+        public String nomeLeitor(){
+            return this.leitor.getNome();
+        }
+        
+        public String dataDevolucaoForm(){
+            String data;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+            data = sdf.format(this.dataDevolucao);
+            return data;
+        }
+        
+        public String dataEmprestimoForm(){
+            String data;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+            data = sdf.format(this.dataEmprestimo);
+            return data;
+        }
+        
+        
 }

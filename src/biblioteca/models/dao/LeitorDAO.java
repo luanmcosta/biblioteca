@@ -80,7 +80,7 @@ public class LeitorDAO {
 			declaracao = conexao.prepareStatement(query);
 			//System.out.println(declaracao.toString());
 			ResultSet res = declaracao.executeQuery(); 
-                        System.out.println("Erro");
+                        //System.out.println("Erro");
 			while (res.next()) {
                             Leitor leitor = new Leitor();
                             leitor.setId(res.getInt("id"));
@@ -103,7 +103,7 @@ public class LeitorDAO {
 	public Leitor consultarLeitor(String coluna, String valor) {
 		
 		Leitor leitor = null;
-		String query = "SELECT p.*, l.quantidade_livros, l.bloqueio, l.id_pessoa FROM " + tabelaPessoas + " p JOIN " + tabelaLeitores + " l ON p.id_leitor = l.id WHERE p.id_leitor IS NOT NULL AND p." + coluna + "='" + valor + "'";
+		String query = "SELECT p.*, l.quantidade_livros, l.bloqueio, l.id_pessoa FROM " + tabelaPessoas + " p JOIN " + tabelaLeitores + " l ON p.id_leitor = l.id WHERE p.id_leitor IS NOT NULL AND p." + coluna + " LIKE '%" + valor + "%'";
 		
 		try {
 			declaracao = conexao.prepareStatement(query);

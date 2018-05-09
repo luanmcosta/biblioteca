@@ -36,7 +36,7 @@ public class FuncionarioController {
 	}
 	
 	public Funcionario autenticarFuncionario(String login, String senha){
-		return funcionarioDAO.consultarFuncionarioLogin(senha, senha);
+		return funcionarioDAO.consultarFuncionarioLogin(login, senha);
 	}
 	
 	public Funcionario buscarFuncionario(String dado, String valor){

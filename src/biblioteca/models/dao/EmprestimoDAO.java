@@ -44,11 +44,10 @@ public class EmprestimoDAO {
 			declaracao.setInt(2, emprestimo.getLeitor().getId());
 			declaracao.setDate(3, new java.sql.Date(emprestimo.getDataDevolucao().getTime()));
 			declaracao.setDate(4, new java.sql.Date(emprestimo.getDataDevolucao().getTime()));
-			//System.out.println(declaracao.toString());
+			System.out.println(declaracao.toString());
 			int idEmprestimo = inserirRegistro();
 			
-			
-			
+
 			// Atualizar livros
 			LivroDAO livroDAO = new LivroDAO();
 			for (int i = 0; i < emprestimo.getLivros().size(); i++) {

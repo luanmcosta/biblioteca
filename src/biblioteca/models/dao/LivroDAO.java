@@ -75,6 +75,7 @@ public class LivroDAO {
 				livro.setAno(res.getInt("ano"));
 				livro.setIsbn(res.getInt("isbn"));
 				livro.setEdicao(res.getInt("edicao"));
+                                livro.setEmprestimo(res.getInt("id_emprestimo"));
 				livros.add(livro);
 			} 
 		} catch (SQLException ex) {
@@ -102,6 +103,7 @@ public class LivroDAO {
 				livro.setAno(res.getInt("ano"));
 				livro.setIsbn(res.getInt("isbn"));
 				livro.setEdicao(res.getInt("edicao"));
+                                livro.setEmprestimo(res.getInt("id_emprestimo"));
 				livros.add(livro);
 			} 
 		} catch (SQLException ex) {
@@ -129,6 +131,7 @@ public class LivroDAO {
 				livro.setAno(res.getInt("ano"));
 				livro.setIsbn(res.getInt("isbn"));
 				livro.setEdicao(res.getInt("edicao"));
+                                livro.setEmprestimo(res.getInt("id_emprestimo"));
 			} else {
 				System.out.println("Não foi possível localizar o Livro com " + coluna + ": " + valor);
 			}

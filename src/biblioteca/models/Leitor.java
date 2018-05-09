@@ -43,5 +43,9 @@ public class Leitor extends Pessoa {
 	public void setBloqueio(boolean bloqueio) {
 		this.bloqueio = bloqueio;
 	}
-
+        
+        public String toString(){
+            return this.getNome();
+        }
+        
 }
